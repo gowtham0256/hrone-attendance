@@ -56,10 +56,10 @@ def call(method: str, path: str, body=None, params=None):
 
 def check(name: str, got, expected):
     if got == expected:
-        print(f"  PASS  {name}")
+        print(f"  PASS  {name}", flush=True)
     else:
         failures.append(name)
-        print(f"  FAIL  {name}\n        got:      {got}\n        expected: {expected}")
+        print(f"  FAIL  {name}\n        got:      {got}\n        expected: {expected}", flush=True)
 
 
 def ms(y, mo, d, h, mi, s=0):
@@ -398,8 +398,11 @@ def bulk_load(n=100_000):
 
 
 def main_run():
+    print(f"Using test database '{main.db.name}' (cloud databases are slow: allow 2-4 minutes)", flush=True)
     logs = build_logs()
+    print(f"Seeding {len(logs)} records...", flush=True)
     seed(logs)
+    print("Starting the app on port 8765...", flush=True)
     server = start_server()
     try:
         test_rules()
